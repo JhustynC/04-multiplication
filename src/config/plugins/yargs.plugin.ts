@@ -5,14 +5,15 @@ export const yarg = yargs(hideBin(process.argv))
   .option("b", {
     alias: "base",
     type: "number",
-    default: 5,
-    // demandOption: true,
+    // default: 5,
+    demandOption: true,
     describe: "Multiplication table base",
   })
   .option("l", {
     alias: "limit",
     type: "number",
     default: 10,
+    // demandOption: true,
     describe: "Multiplication table limit",
   })
   .option("s", {
