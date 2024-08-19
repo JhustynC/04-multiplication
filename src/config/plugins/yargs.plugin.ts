@@ -21,6 +21,16 @@ export const yarg = yargs(hideBin(process.argv))
     type: "boolean",
     default: false,
     describe: "Show multiplication table",
+  }).option("n", {
+    alias: 'name',
+    type: 'string',
+    default: 'multiplication-table',
+    describe:'File Name'
+  }).option("d", {
+    alias: 'destiantion',
+    type: 'string',
+    default: 'outputs',
+    describe:'File destiantion'
   })
   .check((argv, options) => {
     if (argv.b < 1)
