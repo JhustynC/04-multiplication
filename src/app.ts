@@ -1,7 +1,7 @@
 import { yarg } from "./config/plugins/yargs.plugin";
 import { ServerApp } from "./presentation/server-app";
 
-//punto de entrada de la aplicacion
+//? punto de entrada de la aplicacion
 
 (async () => {
   await main();

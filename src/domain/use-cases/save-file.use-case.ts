@@ -12,11 +12,11 @@ export interface SaveFileUseCase {
 
 export class Savefile implements SaveFileUseCase {
   constructor /**repository: StorageRepository */() {}
-  
+
   execute({
     fileContent,
-    fileDestination = 'outputs',
-    fileName = 'table.txt'
+    fileDestination = "outputs",
+    fileName = "table.txt",
   }: SaveFileOptions): boolean {
     if (!fs.existsSync(fileDestination)) {
       fs.mkdirSync(fileDestination, { recursive: true });
