@@ -1,4 +1,4 @@
-import { CreateTable } from "../../src/domain/use-cases/create-table.use-case";
+import { CreateTable } from "../../domain/use-cases/create-table.use-case";
 
 describe("domain/use-cases/CreateTableUseCase", () => {
   test("Should create table with default values", () => {
@@ -6,7 +6,7 @@ describe("domain/use-cases/CreateTableUseCase", () => {
 
     const table = createTable.execute({ base: 2 });
     const rows = table.split("\n").length;
-    console.log(table);
+    // console.log(table);
 
     expect(createTable).toBeInstanceOf(CreateTable);
     expect(table).toContain("1 x 2 = 2");
@@ -26,7 +26,7 @@ describe("domain/use-cases/CreateTableUseCase", () => {
 
     const table = createTable.execute(customOptions);
     const rows = table.split("\n").length;
-    console.log(table);
+    // console.log(table);
 
     expect(createTable).toBeInstanceOf(CreateTable);
     expect(createTableExecuteMock).toHaveBeenCalledWith(
@@ -34,6 +34,8 @@ describe("domain/use-cases/CreateTableUseCase", () => {
     );
     expect(table).toContain("1 x 3 = 3");
     expect(table).toContain("10 x 3 = 30");
+    expect(table).toContain("20 x 3 = 60");
+    expect(table).toContain("30 x 3 = 90");
     expect(rows).toBe(33);
   });
 });

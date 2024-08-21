@@ -7,30 +7,34 @@ export interface SaveFileOptions {
 }
 
 export interface SaveFileUseCase {
-  execute: (options: SaveFileOptions) => boolean;
+  execute: (options: SaveFileOptions) => Promise<boolean>;
 }
 
 export class Savefile implements SaveFileUseCase {
   constructor /**repository: StorageRepository */() {}
-
-  execute({
+  async execute({
     fileContent,
     fileDestination = "outputs",
     fileName = "table.txt",
-  }: SaveFileOptions): boolean {
-    if (!fs.existsSync(fileDestination)) {
-      fs.mkdirSync(fileDestination, { recursive: true });
-    }
-
-    const filePath: string = `${fileDestination}/${fileName}`;
-
-    fs.writeFile(filePath, fileContent, (err) => {
-      if (err) {
-        console.error("Ocurrió un error al intentar guardar el archivo:", err);
-        return false;
+  }: SaveFileOptions): Promise<boolean> {
+    try {
+      if (!fs.existsSync(fileDestination)) {
+        fs.mkdirSync(fileDestination, { recursive: true });
       }
-      console.log("El archivo se ha guardado exitosamente.");
-    });
-    return true;
+
+      const filePath: string = `${fileDestination}/${fileName}`;
+
+      const hasWrite = await new Promise<boolean>((resolve, reject) => {
+        fs.writeFile(filePath, fileContent, (err) => {
+          if (err) reject();
+          resolve(true);
+        });
+      });
+
+      return hasWrite;
+    } catch (err) {
+      // console.log(err);
+      return false;
+    }
   }
 }

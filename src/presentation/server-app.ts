@@ -10,17 +10,23 @@ interface RunOptions {
 }
 
 export class ServerApp {
-static run({ base, limit, showTable, fileName, fileDestination }: RunOptions) {
+  static async run({
+    base,
+    limit,
+    showTable,
+    fileName,
+    fileDestination,
+  }: RunOptions) {
     console.log("Server running...");
 
     const table = new CreateTable().execute({ base, limit });
-    const wasCreated = new Savefile().execute({
+    const wasCreated = await new Savefile().execute({
       fileContent: table,
       fileName: fileName,
-      fileDestination: fileDestination
+      fileDestination: fileDestination,
     });
 
     if (showTable) console.log(table);
-    (wasCreated) ? console.log("File created") : console.log("File not created");
+    wasCreated ? console.log("File created") : console.log("File not created"); 
   }
 }
