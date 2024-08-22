@@ -1,12 +1,15 @@
+import yargs from "yargs";
+import { checkFunction } from "./../../../config/plugins/yargs.plugin";
+
 const runCommand = async (args: string[]) => {
   process.argv = [...process.argv, ...args];
-  try {
-    const { yarg } = await import("./../../../config/plugins/yargs.plugin");
-    return yarg;
-  } catch {
-    console.error("Error importing yarg module");
-    return null; // Si la validación falla
-  }
+  // try {
+  const { yarg } = await import("./../../../config/plugins/yargs.plugin");
+  return yarg;
+  // } catch {
+  //   console.error("Error importing yarg module");
+  //   return null; // Si la validación falla
+  // }
 };
 
 describe("config/plugins/yargs.plugin", () => {
@@ -56,13 +59,20 @@ describe("config/plugins/yargs.plugin", () => {
   });
 
   test("Should throw an error when the base is less than 1", async () => {
-    expect(() => {
-      fail(async () => {
-        const args = await runCommand(["-b", "0"]);
-        console.log("Test ");
-      });
-    });
-
-    // expect(args?.b.message).toBe("Error: The base number must be greater than 0");
+    try {
+      await runCommand(["-b", "0"]);
+    } catch (err) {
+      // console.log(err);
+      expect(err).toBe("Error: The base number must be greater than 0");
+    }
+  });
+  
+  test("Should throw an error when the limit is less than 1", async () => {
+    try {
+      await runCommand(["-l", "0"]);
+    } catch (err) {
+      // console.log(err);
+      expect(err).toBe("Error: The limit number must be greater than 0");
+    }
   });
 });

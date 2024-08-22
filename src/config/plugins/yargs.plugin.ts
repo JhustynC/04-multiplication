@@ -1,5 +1,30 @@
-import yargs, { number } from "yargs";
+import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
+
+export const checkFunction = (
+  argv: yargs.Arguments<
+    {
+      b: number;
+    } & {
+      l: number;
+    } & {
+      s: boolean;
+    } & {
+      n: string;
+    } & {
+      d: string;
+    }
+  >,
+  aliases: {
+    [alias: string]: string;
+  }
+): boolean => {
+  if (argv.b < 1)
+    throw new Error("Error: The base number must be greater than 0");
+  if (argv.l < 1)
+    throw new Error("Error: The limit number must be greater than 0");
+  return true; // Si la validación pasa
+};
 
 export const yarg = yargs(hideBin(process.argv))
   .option("b", {
@@ -34,7 +59,7 @@ export const yarg = yargs(hideBin(process.argv))
     default: "outputs",
     describe: "File destiantion",
   })
-  // .coerce({
+  // .coerce({ //para transformar uno de la opciones si es necesario o para validar
   //   b: (arg) => {
   //     if (arg < 1)
   //       throw new Error("Error: The base number must be greater than 0");
@@ -46,11 +71,15 @@ export const yarg = yargs(hideBin(process.argv))
   //     return arg;
   //   },
   // })
-  .check((argv, options) => {
+  .check((argv, aliases) => {
     if (argv.b < 1)
       throw new Error("Error: The base number must be greater than 0");
     if (argv.l < 1)
       throw new Error("Error: The limit number must be greater than 0");
     return true; // Si la validación pasa
+  })
+  .fail((_, err, yargs) => { //Si algun check falla
+    // console.error("You should be doing", yargs.help());
+    if (err) throw err.message // preserve stack
   })
   .parseSync();
