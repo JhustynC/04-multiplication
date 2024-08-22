@@ -21,17 +21,31 @@ export const yarg = yargs(hideBin(process.argv))
     type: "boolean",
     default: false,
     describe: "Show multiplication table",
-  }).option("n", {
-    alias: 'name',
-    type: 'string',
-    default: 'multiplication-table',
-    describe:'File Name'
-  }).option("d", {
-    alias: 'destiantion',
-    type: 'string',
-    default: 'outputs',
-    describe:'File destiantion'
   })
+  .option("n", {
+    alias: "name",
+    type: "string",
+    default: "multiplication-table",
+    describe: "File Name",
+  })
+  .option("d", {
+    alias: "destiantion",
+    type: "string",
+    default: "outputs",
+    describe: "File destiantion",
+  })
+  // .coerce({
+  //   b: (arg) => {
+  //     if (arg < 1)
+  //       throw new Error("Error: The base number must be greater than 0");
+  //     return arg;
+  //   },
+  //   l: (arg) => {
+  //     if (arg < 1)
+  //       throw new Error("Error: The limit number must be greater than 0");
+  //     return arg;
+  //   },
+  // })
   .check((argv, options) => {
     if (argv.b < 1)
       throw new Error("Error: The base number must be greater than 0");
