@@ -78,8 +78,13 @@ export const yarg = yargs(hideBin(process.argv))
       throw new Error("Error: The limit number must be greater than 0");
     return true; // Si la validación pasa
   })
-  .fail((_, err, yargs) => { //Si algun check falla
+  .fail((msg, err, yargs) => {
+    //Si algun check falla
     // console.error("You should be doing", yargs.help());
-    if (err) throw err.message // preserve stack
+    if (err) {
+      yargs.showHelp();
+      // process.stderr.write(msg + "\n"); // Error message for console
+      throw msg; // Error message for console
+    }
   })
   .parseSync();
