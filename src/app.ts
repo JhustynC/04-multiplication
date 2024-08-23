@@ -4,7 +4,7 @@ import { ServerApp } from "./presentation/server-app";
 //? punto de entrada de la aplicacion
 
 (async () => {
-  await main();
+  // await main();
   console.log("Fin de programa");
 })();
 
